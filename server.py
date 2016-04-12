@@ -9,7 +9,7 @@ socketHandler.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
 socketHandler.bind((HOST, PORT))
 
-print "Listening on PORT:%s" % str(PORT)
+print "Listening on PORT: %s" % str(PORT)
 
 socketHandler.listen(10) #Accepting 10 Connections
 
