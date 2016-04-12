@@ -22,11 +22,11 @@ firstClientData = connection.recv(1024)
 print firstClientData
 
 while True:
-     commandClient = raw_input("Enter a command or type 'quit': ")
+     commandClient = raw_input("Enter a command or type 'exit': ")
 
      connection.send(commandClient)
 
-     if commandClient == "quit": break
+     if commandClient == "exit": break
 
      clientData = connection.recv(1024)
 
