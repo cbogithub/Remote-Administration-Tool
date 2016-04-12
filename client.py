@@ -17,7 +17,7 @@ def run_shell_cmd(socketHolder):
 	data = socketHolder.recv(1024)
 
 	if data:
-		if data == "quit":
+		if data == "exit":
 			socketHolder.close()
 			sys.exit(0)
 		elif len(data) == 0:
