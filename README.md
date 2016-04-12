@@ -1,2 +1,2 @@
 # Remote-Administration-Tool
-To help me remote into my home computer
+This tools is made to help me remote into my home computer.

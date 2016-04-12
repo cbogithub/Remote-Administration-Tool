@@ -1,33 +1,35 @@
 #!/usr/bin/python
 from socket import *
-HOST = ''                 # '' bind to all interfaces
-PORT = 22                #  port
+HOST = ''       
+PORT = 22       
 
-s = socket(AF_INET, SOCK_STREAM)
+socketHandler = socket(AF_INET, SOCK_STREAM)
 
-s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+socketHandler.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
-s.bind((HOST, PORT))
+socketHandler.bind((HOST, PORT))
 
 print "Listening on PORT:%s" % str(PORT)
 
-s.listen(10) #10 Connections
+socketHandler.listen(10) #Accepting 10 Connections
 
-conn, addr = s.accept()
+connection, address = socketHandler.accept()
 
-print 'Connected by', addr
+print 'Welcome: ', address
 
-data = conn.recv(1024)
+firstClientData = connection.recv(1024)
+
+print firstClientData
 
 while True:
-     command = raw_input("Enter shell command or quit: ")
+     commandClient = raw_input("Enter a command or type 'quit': ")
 
-     conn.send(command)
+     connection.send(commandClient)
 
-     if command == "quit": break
+     if commandClient == "quit": break
 
-     data = conn.recv(1024)
+     clientData = connection.recv(1024)
 
-     print data
+     print clientData
 
-conn.close()
+connection.close()

