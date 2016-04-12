@@ -3,8 +3,8 @@ This tools is made to help me remote into my home computer.
 
 Example commands:
 
-ls
-ls ../
+ls<br />
+ls ../ <br />
 
 Warning:
 
