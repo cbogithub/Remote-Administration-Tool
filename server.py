@@ -1,7 +1,8 @@
+
 #!/usr/bin/python
 from socket import *
 HOST = ''       
-PORT = 31337     
+PORT = 22       
 
 socketHandler = socket(AF_INET, SOCK_STREAM)
 
@@ -33,3 +34,4 @@ while True:
      print clientData
 
 connection.close()
+
