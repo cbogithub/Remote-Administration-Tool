@@ -1,10 +1,22 @@
 
 #!/usr/bin/python
+##
+#\file server.py
+#
+#\brief The server for our Remote Administration Tool
+#
+#\author Elephant Bomb
+#
+#\date 2016-04-10
 from socket import *
 import sys
 import thread
 HOST = ''       
 PORT = 22
+
+def fileSend(fileName):
+	with open(fileName) as file:
+		fileData = file.read().splitlines()
 
 def sendMessages(clients):
 	while True:
@@ -25,7 +37,7 @@ def handleMessages(clients):
 if __name__=='__main__':
 	#Create a container for clients
 	clients = []
-	#Create and bind socket
+	#Create and bind sockets
 	socketHandler = socket(AF_INET, SOCK_STREAM)
 	socketHandler.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 	socketHandler.bind((HOST, PORT))

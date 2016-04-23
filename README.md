@@ -7,7 +7,3 @@ Example commands:
 ls<br />
 ls ../ <br />
 dir <br />
-
-Warning:
-
-Do not use the command 'cd'
