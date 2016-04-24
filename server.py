@@ -14,16 +14,26 @@ import thread
 HOST = ''       
 PORT = 22
 
-def fileSend(fileName):
+def fileSend(fileName, clients):
+	fileData = []
 	with open(fileName) as file:
-		fileData = file.read().splitlines()
+		fileContent = file.read()
+		print fileContent
+		fileData.append(fileContent)
+	for i in range(0, len(clients)):
+		clients[0].send("SENDFILE")
+		clients[0].send(str(fileContent))
 
 def sendMessages(clients):
 	while True:
-		if len(clients) > 0:
+		if clients:
 			commandClient = raw_input("Enter a command: ")
-			for i in range(0, len(clients)):
-				clients[i].send(commandClient)
+			if commandClient == "SENDFILE":
+				fileName = "C:\output.txt"
+				fileSend(fileName, clients)
+			else:
+				for i in range(0, len(clients)):
+					clients[i].send(commandClient)
 	clients.close()
 
 def handleMessages(clients):
@@ -42,7 +52,7 @@ if __name__=='__main__':
 	socketHandler.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 	socketHandler.bind((HOST, PORT))
 	print "Listening on PORT: %s" % str(PORT)
-	#Accepting 20 Connections
+	#Accepting 20 Connections to Queue
 	socketHandler.listen(20) 
 	while True:
 		connection, address = socketHandler.accept()

