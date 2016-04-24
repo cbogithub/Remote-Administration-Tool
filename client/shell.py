@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-from fileSystem import incomingFile
+from incomingFile import incomingFile
 import subprocess
 import sys
 

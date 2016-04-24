@@ -8,7 +8,7 @@
 #\author Elephant Bomb
 #
 #\date 2016-04-10
-from fileSystem import fileSend
+from fileSend import fileSend
 from socket import *
 import sys
 import thread
