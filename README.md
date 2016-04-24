@@ -7,3 +7,7 @@ Example commands:
 ls<br />
 ls ../ <br />
 dir <br />
+
+Note:
+
+The pythoncom & pyhook is for Windows only.
