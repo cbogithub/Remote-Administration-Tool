@@ -4,10 +4,18 @@ Originally this was made for an Arch environment but the demo had to be done in 
 
 Example commands:
 
+Command line:
 ls<br />
 ls ../ <br />
 dir <br />
 
-Note:
+List of built-in commands:
+BLOCKINPUT <br />
+LOGKEYSON <br />
+SCREENSHOT <br />
+SENDFILE <br />
+FILEDONE <br />
+OPENZIP <br />
 
+Note:
 The pythoncom & pyhook is for Windows only.
