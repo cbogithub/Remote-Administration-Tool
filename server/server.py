@@ -31,21 +31,29 @@ def handleMessages(clients):
 		for i in range(0, len(clients)):
 				clientData = clients[i].recv(1024)
 				if clientData:
-					print clientData
+					if clientData == "RECOVERFILE":
+						file = open("client_screen.png",'wb') #open in binary
+						line = clients[i].recv(1024)
+						while (line):
+							file.write(line)
+							line = clients[i].recv(1024)
+						file.close()
+					else:
+						print clientData
 	clients.close()
 
 if __name__=='__main__':
 	#Create a container for clients
 	clients = []
 	#Create and bind sockets
-	socketHandler = socket(AF_INET, SOCK_STREAM)
-	socketHandler.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-	socketHandler.bind((HOST, PORT))
+	socketHolder = socket(AF_INET, SOCK_STREAM)
+	socketHolder.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+	socketHolder.bind((HOST, PORT))
 	print "Listening on PORT: %s" % str(PORT)
 	#Accepting 20 Connections to Queue
-	socketHandler.listen(20) 
+	socketHolder.listen(20) 
 	while True:
-		connection, address = socketHandler.accept()
+		connection, address = socketHolder.accept()
 		print 'Connection from: ', address
 		clients.append(connection)
 		thread.start_new_thread(sendMessages, (clients,))

