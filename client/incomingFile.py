@@ -20,5 +20,4 @@ def incomingFile(socketHolder):
 		else:
 			with open("client_dictionary.txt", 'a') as file: ##\brief Use 'w' to write over a file and 'a' to append a file.
 				file.write(nextData)
-				print nextData
 			nextData = socketHolder.recv(1024)
