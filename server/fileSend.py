@@ -26,10 +26,13 @@ def fileSend(fileName, clients):
 			index = 0
 			clients[index].send("SENDFILE")
 			for line in file:
-				if chunkCount != lineChunks:
+				if chunkCount <= lineChunks:
 					clients[index].send(str(line))
+					print line
 					chunkCount = chunkCount + 1
 				else:
+					clients[index].send(str(line))
+					print line
 					if index < len(clients):
 						index = index + 1 
 						chunkCount = 0

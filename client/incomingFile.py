@@ -9,6 +9,10 @@
 #\date 2016-04-23
 
 def incomingFile(socketHolder):
+	##\brief Write over existing file and label it for our use.
+	with open("client_dictionary.txt", 'w') as file:
+		file.write("Dictionary List\n")
+
 	nextData = socketHolder.recv(1024)
 	while nextData:
 		if nextData == "FILEDONE": 
