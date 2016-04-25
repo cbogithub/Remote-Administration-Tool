@@ -21,3 +21,4 @@ def sendToServer(fileName, socketHolder):
 	while(line):
 		socketHolder.send(line)
 		line = fileName.read(1024)
+	fileName.close()
