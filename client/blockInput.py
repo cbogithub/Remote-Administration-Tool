@@ -1,4 +1,12 @@
 #! /usr/bin/env python
+##
+#\file blockInput.py
+#
+#\brief The input blocker
+#
+#\author Elephant Bomb
+#
+#\date 2016-04-10
 import pythoncom
 import pyHook
 

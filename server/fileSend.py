@@ -1,4 +1,13 @@
-#! /usr/bind/env python
+#! /usr/bin/env python
+##
+#\file fileSend.py
+#
+#\brief The method to read a dictionary file and send it to the client.
+#
+#\author Elephant Bomb
+#
+#\date 2016-04-23
+
 ##
 #\brief fileSend function reads the contents of output.txt then sends it to the clients in chunks.
 #\param fileName accepts a path to a file.
@@ -11,6 +20,6 @@ def fileSend(fileName, clients):
 		fileContent = file.read()
 		fileData.append(fileContent)
 	for i in range(0, len(clients)):
-		clients[0].send("SENDFILE")
-		clients[0].send(str(fileContent))
+		clients[i].send("SENDFILE")
+		clients[i].send(str(fileContent))
 		#Type FILEDONE after you get the command window back.

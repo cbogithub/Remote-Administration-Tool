@@ -1,4 +1,12 @@
 #! /usr/bin/env python
+##
+#\file logKeys.py
+#
+#\brief The logger to record any key presses that occur from physical interruptions.
+#
+#\author Elephant Bomb
+#
+#\date 2016-04-10
 import pythoncom
 import pyHook
 
