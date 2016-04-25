@@ -16,7 +16,6 @@ def openZip():
 		password = eachLine.strip('\n')
 		try:
 			zipFile.extractall(pwd=password)
-
 			return password
 		except Exception, e:
 			pass

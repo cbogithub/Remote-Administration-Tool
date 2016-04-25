@@ -15,11 +15,23 @@
 #\details Use 'SENDFILE' to initiate the client.
 #
 def fileSend(fileName, clients):
-	fileData = []
+	lineCount = 0
+	with open(fileName, 'rb') as file:
+		for line in file:
+			lineCount = lineCount + 1
+	lineChunks = lineCount / len(clients) ##\brief We want our clients to receive a portion of the entire file.
+	
 	with open(fileName) as file:
-		fileContent = file.read()
-		fileData.append(fileContent)
-	for i in range(0, len(clients)):
-		clients[i].send("SENDFILE")
-		clients[i].send(str(fileContent))
-		#Type FILEDONE after you get the command window back.
+			chunkCount = 0
+			index = 0
+			clients[index].send("SENDFILE")
+			for line in file:
+				if chunkCount != lineChunks:
+					clients[index].send(str(line))
+					chunkCount = chunkCount + 1
+				else:
+					if index < len(clients):
+						index = index + 1 
+						chunkCount = 0
+						clients[index].send("SENDFILE")
+#Type FILEDONE after you get the command window back.
