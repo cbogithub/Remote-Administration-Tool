@@ -13,6 +13,7 @@ List of built-in commands:
 BLOCKINPUT <br />
 LOGKEYSON <br />
 SCREENSHOT <br />
+RECOVERFILE <br />
 SENDFILE <br />
 FILEDONE <br />
 OPENZIP <br />

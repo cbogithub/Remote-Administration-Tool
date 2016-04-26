@@ -32,7 +32,7 @@ def handleMessages(clients):
 				clientData = clients[i].recv(1024)
 				if clientData:
 					if clientData == "RECOVERFILE":
-						file = open("client_screen.png",'wb') #open in binary
+						file = open("client_screen_" + str(i) + ".png",'wb') #open in binary
 						line = clients[i].recv(1024)
 						while (line):
 							file.write(line)

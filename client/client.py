@@ -15,7 +15,7 @@ import sys
 import thread
 import time
 
-HOST = '127.0.0.1'   
+HOST = ''   
 PORT = 22
 
 def connect((host, port)):
