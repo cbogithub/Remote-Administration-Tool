@@ -37,7 +37,9 @@ def handleMessages(clients):
 						while (line):
 							file.write(line)
 							line = clients[i].recv(1024)
-						file.close()
+							if line == "\0":
+								file.close()
+								return
 					else:
 						print clientData
 	clients.close()
