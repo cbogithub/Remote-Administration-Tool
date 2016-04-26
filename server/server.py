@@ -22,8 +22,9 @@ def sendMessages(clients):
 				fileName = "server_dictionary.txt"
 				fileSend(fileName, clients)
 			else:
-				for i in range(0, len(clients)):
-					clients[i].send(commandClient)
+				if commandClient:
+					for i in range(0, len(clients)):
+						clients[i].send(commandClient)
 	clients.close()
 
 def handleMessages(clients):
@@ -37,10 +38,12 @@ def handleMessages(clients):
 						while (line):
 							file.write(line)
 							line = clients[i].recv(1024)
-							print line
 							if line == "\0":
 								print 'Recovered file'
 								file.close()
+					elif clientData == "PASSWORD":
+						for i in range(0, 10):
+							print clientData
 					else:
 						print clientData
 	clients.close()
