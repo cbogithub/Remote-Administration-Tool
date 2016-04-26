@@ -20,3 +20,5 @@ OPENZIP <br />
 
 Note:
 The pythoncom & pyhook is for Windows only.
+
+Use the command FLUSH numerous times until the incoming data is consistent.

