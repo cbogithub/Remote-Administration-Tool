@@ -37,9 +37,10 @@ def handleMessages(clients):
 						while (line):
 							file.write(line)
 							line = clients[i].recv(1024)
+							print line
 							if line == "\0":
+								print 'Recovered file'
 								file.close()
-								return
 					else:
 						print clientData
 	clients.close()
