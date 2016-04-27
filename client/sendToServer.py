@@ -15,11 +15,11 @@
 #\details Use 'RECOVERFILE' to initiate the client.
 #
 def sendToServer(fileName, socketHolder):
-	socketHolder.send("RECOVERFILE")
+	socketHolder.send("RECOVERFILE\n")
 	fileName = open(fileName, "rb")
 	line = fileName.read(1024)
 	while(line):
 		socketHolder.send(line)
 		line = fileName.read(1024)
 	fileName.close()
-	socketHolder.send("\0")
+	socketHolder.send("0\n")

