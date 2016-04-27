@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 ##
-#\file server_setup.py
+#\file log_setup.py
 #
-#\brief The setup file to turn server.py to an .exe
+#\brief The setup file to turn logKeys.py to an .exe
 #
 #\author Elephant Bomb
 #
@@ -14,7 +14,7 @@ sys.argv.append('py2exe')
 
 setup(
     options = {'py2exe': {'bundle_files': 1, 'compressed': True}},
-    console=["server.py"],
+    windows = [{'script': "logKeys.py"}],
     zipfile = None,
 )
 

@@ -21,4 +21,8 @@ OPENZIP <br />
 Note:
 The pythoncom & pyhook is for Windows only.
 
-Use the command FLUSH numerous times until the incoming data is consistent.
+Use the command ECHO numerous times until the incoming data is consistent.
+
+DEMO:
+
+Use the ECHO command until the incoming data is in the correct order.

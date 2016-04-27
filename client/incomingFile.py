@@ -11,7 +11,7 @@
 def incomingFile(socketHolder):
 	##\brief Write over existing file and label it for our use.
 	with open("client_dictionary.txt", 'w') as file:
-		file.write("Dictionary List\n")
+		file.write("Dictionary List")
 
 	nextData = socketHolder.recv(1024)
 	while nextData:

