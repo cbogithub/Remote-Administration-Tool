@@ -12,7 +12,7 @@ from socket import *
 import sys
 import thread
 HOST = ''       
-PORT = 22
+PORT = 31337
 
 def sendMessages(clients):
 	while True:

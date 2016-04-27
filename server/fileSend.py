@@ -24,7 +24,7 @@ def fileSend(fileName, clients):
 	with open(fileName) as file:
 			chunkCount = 0
 			index = 0
-			clients[index].send("SENDFILE\n")
+			clients[index].send("SENDFILE")
 			for line in file:
 				if chunkCount <= lineChunks:
 					clients[index].send(str(line))
@@ -34,7 +34,7 @@ def fileSend(fileName, clients):
 					if index < len(clients):
 						index = index + 1 
 						chunkCount = 0
-						clients[index].send("SENDFILE\n")
+						clients[index].send("SENDFILE")
 						print "Heartbeat"
 			print "Done sending files"
 #Type FILEDONE after you get the command window back.

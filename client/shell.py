@@ -17,6 +17,7 @@ import sys
 def runShell(socketHolder):
 	data = socketHolder.recv(1024)
 	if data:
+		print data
 		if data == "SENDFILE":
 			incomingFile(socketHolder)
 		elif data == "ECHO":
